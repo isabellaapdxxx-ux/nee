@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How AirPods Got Famous</title>
+<script src="timeline.js"></script>
+<style>
+/* ============================================================
+   "How AirPods got so famous" — narrated explainer, 1080x1920
+   Every timed animation is placed by JS from timeline.js
+   (generated with the voice-over), so visuals hit the words.
+   One clock drives everything -> loops in the browser and
+   renders frame-perfect to MP4 (render.mjs).
+   ============================================================ */
+:root{
+  --bg:#07080c; --ink:#fff; --mute:#9aa0ad; --accent:#7cc4ff; --hot:#ff5a4e; --gold:#ffd166;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#000;overflow:hidden}
+body{display:grid;place-items:center;font-family:Inter,"Inter Display",system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink)}
+.stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--bg);transform-origin:center;flex:none}
+.scene{position:absolute;inset:0;opacity:0}
+.bgglow{position:absolute;inset:-10%;pointer-events:none}
+.abs{position:absolute}
+.cx{left:50%;transform:translateX(-50%)}
+.row{position:absolute;left:0;right:0;text-align:center}
+.h-xxl{font-size:230px;font-weight:900;letter-spacing:-10px;line-height:.9}
+.h-xl{font-size:150px;font-weight:900;letter-spacing:-6px;line-height:.92}
+.h-l{font-size:104px;font-weight:900;letter-spacing:-4px;line-height:.98}
+.h-m{font-size:68px;font-weight:800;letter-spacing:-2px;line-height:1.05}
+.kicker{font-size:38px;font-weight:700;letter-spacing:10px;text-transform:uppercase;color:var(--accent)}
+.sub{font-size:44px;font-weight:600;color:var(--mute);letter-spacing:-.5px}
+.grad{background:linear-gradient(100deg,#ffffff,#bfe3ff 45%,#7cc4ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hot{color:var(--hot)}
+.flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:60}
+.grain{position:absolute;inset:0;pointer-events:none;z-index:55;opacity:.06;
+  background-image:repeating-radial-gradient(circle at 17% 23%,#fff 0 1px,transparent 1px 3px);mix-blend-mode:overlay}
+
+/* ---------------- keyframes (placed by JS) ---------------- */
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fadeOut{from{opacity:1}to{opacity:0}}
+@keyframes rise{from{opacity:0;transform:translateY(80px)}to{opacity:1;transform:none}}
+@keyframes drop{from{opacity:0;transform:translateY(-90px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.4)}65%{opacity:1;transform:scale(1.08)}100%{opacity:1;transform:scale(1)}}
+@keyframes slam{0%{opacity:0;transform:scale(2.6) rotate(var(--r,0deg))}60%{opacity:1;transform:scale(.93) rotate(var(--r,0deg))}100%{opacity:1;transform:scale(1) rotate(var(--r,0deg))}}
+@keyframes slideL{from{opacity:0;transform:translateX(-140px)}to{opacity:1;transform:none}}
+@keyframes slideR{from{opacity:0;transform:translateX(140px)}to{opacity:1;transform:none}}
+@keyframes sheet{from{transform:translateY(700px)}to{transform:none}}
+@keyframes yank{0%{transform:none}25%{transform:translateY(40px)}100%{transform:translate(160px,-720px) rotate(70deg);opacity:0}}
+@keyframes strike{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes shake{0%,100%{transform:translate(0)}20%{transform:translate(-16px,6px)}40%{transform:translate(14px,-8px)}60%{transform:translate(-9px,-4px)}80%{transform:translate(7px,8px)}}
+@keyframes flashK{0%{opacity:.9}100%{opacity:0}}
+@keyframes lid{from{transform:perspective(900px) rotateX(0)}to{transform:perspective(900px) rotateX(-112deg)}}
+@keyframes podsUp{from{transform:translateY(150px)}to{transform:translateY(-10px)}}
+@keyframes ring{0%{opacity:.8;transform:scale(.3)}100%{opacity:0;transform:scale(2.4)}}
+@keyframes flatten{from{transform:scaleY(1)}to{transform:scaleY(.04)}}
+@keyframes zoomOut{from{transform:scale(1.25)}to{transform:scale(1)}}
+@keyframes zoomIn{from{transform:scale(1)}to{transform:scale(1.18)}}
+@keyframes glowOn{from{box-shadow:0 0 0 rgba(124,196,255,0)}to{box-shadow:0 0 120px rgba(124,196,255,.85),inset 0 0 40px rgba(124,196,255,.35)}}
+@keyframes fill{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes sweep{from{transform:translateX(-120%) skewX(-20deg)}to{transform:translateX(220%) skewX(-20deg)}}
+/* ambient (infinite, start at 0) */
+@keyframes float{0%,100%{transform:translateY(0) rotate(var(--rot,0deg))}50%{transform:translateY(-26px) rotate(calc(var(--rot,0deg) + 3deg))}}
+@keyframes spinSlow{to{transform:rotate(360deg)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+@property --n{syntax:'<integer>';inherits:false;initial-value:0}
+@keyframes count{from{--n:0}to{--n:60}}
+
+/* ---------------- the AirPod (CSS only) ---------------- */
+.pod{position:absolute;width:150px;height:420px}
+.pod .head{position:absolute;left:0;top:0;width:150px;height:140px;border-radius:48% 52% 46% 54%/55% 50% 50% 45%;
+  background:radial-gradient(70% 70% at 35% 30%,#ffffff,#eef0f3 50%,#c9ced6 85%,#a9b0ba);
+  box-shadow:inset -10px -14px 26px rgba(0,0,0,.14),0 18px 40px rgba(0,0,0,.45)}
+.pod .grill{position:absolute;left:30px;top:34px;width:44px;height:30px;border-radius:50%;background:radial-gradient(#1b1d22,#3b3f47);opacity:.85}
+.pod .stem{position:absolute;left:84px;top:104px;width:46px;height:300px;border-radius:24px;
+  background:linear-gradient(90deg,#c3c8d0,#ffffff 35%,#f3f4f6 60%,#b9bfc8);box-shadow:0 18px 30px rgba(0,0,0,.35)}
+.pod .tip{position:absolute;left:84px;top:378px;width:46px;height:30px;border-radius:0 0 24px 24px;
+  background:linear-gradient(90deg,#8d939c,#e3e6ea 40%,#a0a6ae)}
+.pod.r{transform:scaleX(-1)}
+.pod.pro .stem{height:190px}
+.pod.pro .tip{top:268px}
+.pod.pro .head{height:150px}
+.pod.pro .head::after{content:"";position:absolute;left:-26px;top:58px;width:64px;height:60px;border-radius:50%;
+  background:radial-gradient(60% 60% at 40% 40%,#f6f7f9,#d5d9df);box-shadow:inset -6px -6px 12px rgba(0,0,0,.12)}
+.pair{position:absolute;width:420px;height:440px}
+.pair .pod:nth-child(1){left:20px;top:0;--rot:-8deg;animation:float 4.2s ease-in-out infinite}
+.pair .pod:nth-child(2){right:20px;top:10px;--rot:8deg;animation:float 4.2s ease-in-out -2.1s infinite}
+.pair .pod:nth-child(2) .wrap{transform:scaleX(-1)}
+
+/* ---------------- the case ---------------- */
+.case{position:absolute;width:420px;height:330px}
+.case .body{position:absolute;left:0;right:0;bottom:0;height:220px;border-radius:30px 30px 110px 110px/30px 30px 90px 90px;
+  background:linear-gradient(180deg,#f7f8fa,#e4e7eb 60%,#c8cdd4);box-shadow:inset 0 -20px 40px rgba(0,0,0,.12),0 40px 80px rgba(0,0,0,.55)}
+.case .lid{position:absolute;left:0;right:0;top:0;height:116px;border-radius:110px 110px 18px 18px/90px 90px 18px 18px;transform-origin:50% 100%;
+  background:linear-gradient(180deg,#ffffff,#eceef1);box-shadow:inset 0 10px 20px rgba(255,255,255,.8),0 4px 0 rgba(0,0,0,.08)}
+.case .led{position:absolute;left:50%;top:170px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:#43e07a;box-shadow:0 0 18px #43e07a;animation:blink 1.4s infinite}
+.case .inner{position:absolute;left:30px;right:30px;top:96px;height:40px;border-radius:50%;background:radial-gradient(#9aa1ab,#e7e9ed);opacity:.9}
+
+/* ---------------- captions ---------------- */
+.cap{position:absolute;left:90px;right:180px;bottom:440px;text-align:center;z-index:40;
+  font-size:54px;font-weight:800;letter-spacing:-1px;line-height:1.18;
+  text-shadow:0 4px 0 rgba(0,0,0,.6),0 0 24px rgba(0,0,0,.8)}
+.cap span{color:rgba(255,255,255,.55);transition:none}
+.cap span.on{color:#fff}
+.cap span.now{color:var(--gold)}
+
+/* ---------------- scene specifics ---------------- */
+/* jack */
+.phoneBottom{position:absolute;left:190px;top:780px;width:700px;height:420px;border-radius:0 0 110px 110px;
+  background:linear-gradient(180deg,#24272e,#14161b);border:6px solid #3a3e47;border-top:none}
+.phoneBottom .port{position:absolute;bottom:-6px;left:310px;width:80px;height:20px;border-radius:10px;background:#000}
+.phoneBottom .holes{position:absolute;bottom:4px;left:430px;display:flex;gap:16px}
+.phoneBottom .holes i{width:14px;height:14px;border-radius:50%;background:#000}
+.phoneBottom .holes.l{left:150px}
+.jackHole{position:absolute;bottom:-6px;left:180px;width:52px;height:24px;border-radius:12px;background:#000;box-shadow:0 0 0 4px #555 inset}
+.plug{position:absolute;left:375px;top:1330px;width:60px;height:420px}
+.plug .pin{position:absolute;left:21px;top:-110px;width:18px;height:120px;border-radius:9px 9px 2px 2px;
+  background:linear-gradient(90deg,#8e949c,#f1f2f4 45%,#9aa0a8);}
+.plug .pin::before,.plug .pin::after{content:"";position:absolute;left:0;right:0;height:4px;background:#2a2c31;top:26px}
+.plug .pin::after{top:58px}
+.plug .collar{position:absolute;left:4px;top:0;width:52px;height:110px;border-radius:12px;background:linear-gradient(90deg,#d9dce0,#fff 40%,#cfd3d8)}
+.plug .cord{position:absolute;left:24px;top:106px;width:12px;height:30px;background:linear-gradient(90deg,#d5d8dc,#fff,#c8ccd2)}
+.stamp{display:inline-block;padding:18px 46px;border:12px solid var(--hot);border-radius:26px;color:var(--hot);
+  font-size:150px;font-weight:900;letter-spacing:-4px;--r:-8deg;transform:rotate(-8deg);background:rgba(255,90,78,.06)}
+.bubble{position:absolute;padding:24px 34px;border-radius:40px;font-size:42px;font-weight:800;letter-spacing:-.5px;white-space:nowrap}
+.bubble.red{background:#ff5a4e;color:#fff}
+.bubble.dark{background:#1c1f27;color:#fff;border:2px solid #333845}
+
+/* launch */
+.spot{position:absolute;left:50%;top:-200px;width:1100px;height:1500px;margin-left:-550px;
+  background:radial-gradient(40% 55% at 50% 60%,rgba(255,255,255,.18),transparent 70%);
+  clip-path:polygon(40% 0,60% 0,100% 100%,0 100%)}
+.price{display:inline-block;padding:16px 44px;border-radius:999px;background:#fff;color:#000;font-size:110px;font-weight:900;letter-spacing:-4px}
+.tweet{position:absolute;width:780px;left:150px;padding:30px 36px;border-radius:30px;background:#14171f;border:2px solid #2a2f3b;
+  box-shadow:0 30px 60px rgba(0,0,0,.6)}
+.tweet .who{display:flex;align-items:center;gap:18px;font-size:30px;font-weight:700;color:var(--mute);margin-bottom:12px}
+.tweet .who i{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#3a4152,#5b647a)}
+.tweet .txt{font-size:44px;font-weight:700;line-height:1.2;letter-spacing:-.5px}
+.tweet .meta{margin-top:14px;font-size:28px;color:#6b7383;font-weight:600}
+.laugh{color:var(--gold)}
+
+/* magic */
+.sheet{position:absolute;left:150px;right:150px;top:1000px;height:270px;border-radius:56px;background:rgba(245,246,248,.97);color:#111;
+  box-shadow:0 -10px 80px rgba(124,196,255,.35)}
+.sheet .t{position:absolute;top:44px;left:0;right:0;text-align:center;font-size:46px;font-weight:800;letter-spacing:-1px}
+.sheet .c{position:absolute;top:116px;left:50%;margin-left:-60px;width:120px;height:120px;border-radius:50%;background:#2fbf5b}
+.sheet .c::after{content:"";position:absolute;left:40px;top:22px;width:30px;height:58px;border:solid #fff;border-width:0 12px 12px 0;transform:rotate(45deg)}
+.ringPulse{position:absolute;left:50%;top:560px;width:560px;height:560px;margin:-280px 0 0 -280px;border-radius:50%;border:6px solid var(--accent);opacity:0}
+.nope{position:relative;display:inline-block}
+.nope::after{content:"";position:absolute;left:-14px;right:-14px;top:52%;height:14px;border-radius:7px;background:var(--hot);transform-origin:left;transform:scaleX(0);animation:inherit}
+.strike{position:absolute;left:-16px;right:-16px;top:50%;height:14px;margin-top:-7px;border-radius:7px;background:var(--hot);transform-origin:left center}
+.chip{position:absolute;left:50%;top:900px;width:300px;height:300px;margin-left:-150px;border-radius:44px;
+  background:linear-gradient(145deg,#2a2f3a,#12141a);border:3px solid #4a5263;display:grid;place-items:center;
+  font-size:120px;font-weight:900;letter-spacing:-4px}
+.chip::before{content:"";position:absolute;inset:-34px;border-radius:60px;
+  background:repeating-linear-gradient(90deg,transparent 0 30px,#7d8696 30px 40px) top/100% 30px no-repeat,
+             repeating-linear-gradient(90deg,transparent 0 30px,#7d8696 30px 40px) bottom/100% 30px no-repeat,
+             repeating-linear-gradient(0deg,transparent 0 30px,#7d8696 30px 40px) left/30px 100% no-repeat,
+             repeating-linear-gradient(0deg,transparent 0 30px,#7d8696 30px 40px) right/30px 100% no-repeat;z-index:-1;opacity:.8}
+
+/* status */
+.crowd{position:absolute;left:60px;right:60px;top:560px;height:640px;z-index:0}
+.person{position:absolute;width:150px;height:220px}
+.person .hd{position:absolute;left:25px;top:0;width:100px;height:120px;border-radius:50% 50% 46% 46%;background:var(--skin,#3a3f4b)}
+.person .bd{position:absolute;left:0;top:118px;width:150px;height:110px;border-radius:70px 70px 0 0;background:var(--shirt,#262a33)}
+.person .bud{position:absolute;left:14px;top:52px;width:14px;height:46px;border-radius:7px;background:#fff;box-shadow:0 0 14px rgba(255,255,255,.9)}
+.person .bud.r{left:122px}
+.meme{position:absolute;left:120px;right:180px;padding:34px 40px;background:#fff;color:#000;border-radius:24px;font-size:46px;font-weight:800;line-height:1.2;
+  box-shadow:0 30px 60px rgba(0,0,0,.6)}
+.meme small{display:block;font-size:28px;color:#666;font-weight:700;margin-bottom:10px;letter-spacing:2px;text-transform:uppercase}
+.tag{display:inline-block;padding:14px 34px;border-radius:999px;background:var(--gold);color:#000;font-size:48px;font-weight:900;letter-spacing:-1px}
+
+/* growth */
+.wave{position:absolute;left:120px;right:120px;top:900px;height:220px;transform-origin:center}
+.anc{display:inline-block;padding:14px 30px;border-radius:999px;border:4px solid var(--accent);color:var(--accent);font-size:38px;font-weight:800;letter-spacing:3px}
+.bigNum{font-size:300px;font-weight:900;letter-spacing:-14px;line-height:.9;counter-reset:n var(--n);animation:count 1.6s cubic-bezier(.2,.7,.2,1) both paused}
+.bigNum::before{content:"~" counter(n)}
+.bars{position:absolute;left:200px;right:240px;top:820px;height:330px;display:flex;align-items:flex-end;gap:34px}
+.bars div{flex:1;border-radius:18px 18px 6px 6px;background:linear-gradient(180deg,#bfe3ff,#3d8bd6);transform-origin:bottom}
+
+/* outro */
+.word3{font-size:96px;font-weight:900;letter-spacing:-3px;line-height:1.05}
+.word3 b{font-weight:900;color:var(--accent)}
+.endglow{position:absolute;left:50%;top:640px;width:900px;height:900px;margin:-450px 0 0 -450px;border-radius:50%;
+  background:radial-gradient(circle,rgba(124,196,255,.35),transparent 65%)}
+.sheen{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.sheen::after{content:"";position:absolute;top:0;bottom:0;width:30%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);transform:translateX(-120%)}
+
+/* preview chrome */
+.btn{position:fixed;left:16px;bottom:16px;z-index:99;padding:10px 16px;border-radius:999px;border:0;background:#fff;color:#000;font:600 14px Inter,system-ui,sans-serif;cursor:pointer}
+body.capture .btn{display:none}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+
+  <!-- ===================== 1. HOOK ===================== -->
+  <section class="scene" data-scene="hook">
+    <div class="bgglow" style="background:radial-gradient(50% 35% at 50% 38%,rgba(124,196,255,.22),transparent 70%)"></div>
+    <div class="row kicker" style="top:250px" data-k="fadeIn" data-at="L0">The rise of a tiny gadget</div>
+    <div class="pair" style="left:330px;top:420px" data-k="pop" data-at="L0:tiny" data-dur=".8">
+      <div class="pod"><div class="head"><div class="grill"></div></div><div class="stem"></div><div class="tip"></div></div>
+      <div class="pod"><div class="wrap" style="position:absolute;inset:0"><div class="head"><div class="grill"></div></div><div class="stem"></div><div class="tip"></div></div></div>
+    </div>
+    <div class="row h-xl" style="top:930px" data-k="slam" data-at="L0:famous" data-dur=".5">How did<br><span class="grad">THESE</span> get</div>
+    <div class="row h-xl" style="top:1210px;font-size:120px" data-k="slam" data-at="L0:planet" data-dur=".5">so famous?</div>
+  </section>
+
+  <!-- ===================== 2. THE JACK ===================== -->
+  <section class="scene" data-scene="jack">
+    <div class="bgglow" style="background:radial-gradient(60% 40% at 50% 30%,rgba(255,90,78,.16),transparent 70%)"></div>
+    <div class="row kicker" style="top:220px;color:#ff8a80" data-k="fadeIn" data-at="L1">September 2016</div>
+    <div class="row h-xxl" style="top:290px" data-k="slam" data-at="L1:2016" data-dur=".5">2016</div>
+    <div class="abs" style="left:0;top:0;width:1080px;height:1920px" data-k="rise" data-at="L1:Apple" data-dur=".6">
+      <div class="phoneBottom">
+        <div class="holes l"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="jackHole" data-k="fadeOut" data-at="L1:jack+.25" data-dur=".2"></div>
+        <div class="port"></div>
+        <div class="holes"><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+      <div class="plug" style="left:381px;top:1210px" data-k="yank" data-at="L1:jack-.1" data-dur=".9" data-ease="cubic-bezier(.5,0,.8,.6)">
+        <div class="pin"></div><div class="collar"></div><div class="cord"></div>
+      </div>
+    </div>
+    <div class="abs" style="inset:0" data-k="fadeOut" data-at="L2:courage-.1" data-dur=".2"><div class="row h-m" style="top:640px;color:var(--mute)" data-k="rise" data-at="L1:iPhone">no more headphone jack</div></div>
+    <div class="row" style="top:690px;z-index:5" data-k="slam" data-at="L2:courage-.05" data-dur=".45"><span class="stamp">"COURAGE"</span></div>
+    <div class="bubble red" style="left:110px;top:1010px" data-k="pop" data-at="L2:People">WHY?!</div>
+    <div class="bubble dark" style="left:520px;top:960px" data-k="pop" data-at="L2:were">#RIPheadphonejack</div>
+    <div class="bubble red" style="left:330px;top:1130px" data-k="pop" data-at="L2:furious">not buying it.</div>
+    <div class="bubble dark" style="left:620px;top:1110px" data-k="pop" data-at="L2:furious+.2">so... dongles?</div>
+  </section>
+
+  <!-- ===================== 3. THE LAUNCH ===================== -->
+  <section class="scene" data-scene="launch">
+    <div class="spot" data-k="fadeIn" data-at="L3" data-dur="1"></div>
+    <div class="abs" style="inset:0" data-k="fadeOut" data-at="L4" data-dur=".3"><div class="row kicker" style="top:230px" data-k="fadeIn" data-at="L3">Same stage, same day</div></div>
+    <div class="abs" style="left:0;top:0;width:1080px;height:1920px" data-k="zoomIn" data-at="L4" data-dur="6" data-ease="linear">
+      <div class="pair" style="left:330px;top:330px" data-k="pop" data-at="L3:revealed" data-dur=".9">
+        <div class="pod"><div class="head"><div class="grill"></div></div><div class="stem"></div><div class="tip"></div></div>
+        <div class="pod"><div class="wrap" style="position:absolute;inset:0"><div class="head"><div class="grill"></div></div><div class="stem"></div><div class="tip"></div></div></div>
+      </div>
+    </div>
+    <div class="row h-l" style="top:800px" data-k="rise" data-at="L3:AirPods"><span class="grad">AirPods</span></div>
+    <div class="row" style="top:940px" data-k="slam" data-at="L3:hundred" data-dur=".5"><span class="price">$159</span></div>
+    <div class="abs" style="inset:0;background:rgba(7,8,12,.72)" data-k="fadeIn" data-at="L4" data-dur=".4"></div>
+    <div class="row h-l laugh" style="top:250px" data-k="slam" data-at="L4" data-dur=".5">"LOL."</div>
+    <div class="tweet" style="top:440px" data-k="slideL" data-at="L4:toothbrush-.3">
+      <div class="who"><i></i>@someone_online</div>
+      <div class="txt">they look like electric toothbrush heads lmao</div>
+      <div class="meta">Sept 2016</div>
+    </div>
+    <div class="tweet" style="top:720px;left:110px" data-k="slideR" data-at="L4:everyone">
+      <div class="who"><i></i>@just_a_guy</div>
+      <div class="txt">you are 100% going to lose one of these in a week</div>
+    </div>
+    <div class="tweet" style="top:1000px;left:170px" data-k="slideL" data-at="L4:lose">
+      <div class="who"><i></i>@not_convinced</div>
+      <div class="txt">$159 for EARBUDS? nobody's buying that</div>
+    </div>
+  </section>
+
+  <!-- ===================== 4. THE MAGIC ===================== -->
+  <section class="scene" data-scene="magic">
+    <div class="bgglow" style="background:radial-gradient(55% 40% at 50% 35%,rgba(124,196,255,.25),transparent 70%)"></div>
+    <div class="row kicker" style="top:230px" data-k="fadeIn" data-at="L5">Then people tried them</div>
+    <div class="ringPulse" data-k="ring" data-at="L5:connect" data-dur="1.4"></div>
+    <div class="ringPulse" data-k="ring" data-at="L5:connect+.35" data-dur="1.4"></div>
+    <div class="abs" style="left:0;top:0;width:1080px;height:1920px" data-k="fadeOut" data-at="L6:cables-.35" data-dur=".3">
+      <div class="abs" style="left:330px;top:300px;width:420px;height:600px;overflow:visible">
+        <!-- pods rising out of the open case -->
+        <div class="abs" style="left:-10px;top:30px;width:440px;height:440px;clip-path:inset(-400px -100px 160px -100px)">
+          <div class="abs" style="left:0;top:0;width:440px;height:440px;transform:translateY(150px)" data-k="podsUp" data-at="L5:case+.2" data-dur=".9">
+            <div class="pod" style="left:40px;top:0;transform:scale(.62);transform-origin:top left"><div class="head"><div class="grill"></div></div><div class="stem"></div><div class="tip"></div></div>
+            <div class="pod r" style="left:260px;top:0;transform:scale(-.62,.62);transform-origin:top left"><div class="head"><div class="grill"></div></div><div class="stem"></div><div class="tip"></div></div>
+          </div>
+        </div>
+        <div class="case" style="left:0;top:260px" data-k="pop" data-at="L5" data-dur=".6">
+          <div class="body"></div><div class="inner"></div>
+          <div class="lid" data-k="lid" data-at="L5:Open" data-dur=".55"></div>
+          <div class="led"></div>
+        </div>
+      </div>
+      <div class="sheet" data-k="sheet" data-at="L5:connect-.15" data-dur=".55" style="transform:translateY(700px)">
+        <div class="t">AirPods · Connected</div><div class="c"></div>
+      </div>
+    </div>
+    <div class="row h-l" style="top:330px" data-k="slam" data-at="L6:cables" data-dur=".45"><span style="position:relative;display:inline-block">NO CABLES<i class="strike" data-k="strike" data-at="L6:cables+.25" data-dur=".25"></i></span></div>
+    <div class="row h-l" style="top:470px" data-k="slam" data-at="L6:tangles" data-dur=".45"><span style="position:relative;display:inline-block">NO TANGLES<i class="strike" data-k="strike" data-at="L6:tangles+.25" data-dur=".25"></i></span></div>
+    <div class="chip" data-k="pop" data-at="L6:chip-.2" data-dur=".6"><span class="grad">W1</span></div>
+    <div class="abs" style="left:390px;top:900px;width:300px;height:300px;border-radius:44px" data-k="glowOn" data-at="L6:magic" data-dur=".8"></div>
+    <div class="row sub" style="top:1240px;display:none"></div>
+  </section>
+
+  <!-- ===================== 5. STATUS ===================== -->
+  <section class="scene" data-scene="status">
+    <div class="bgglow" style="background:radial-gradient(60% 40% at 50% 45%,rgba(255,209,102,.16),transparent 70%)"></div>
+    <div class="row kicker" style="top:230px;color:var(--gold)" data-k="fadeIn" data-at="L7">Impossible to miss</div>
+    <div class="row h-l" style="top:300px" data-k="slam" data-at="L7:white" data-dur=".5">little <span style="color:#fff;text-shadow:0 0 40px rgba(255,255,255,.7)">white</span> stems</div>
+    <div class="crowd" id="crowd"></div>
+    <div class="abs" style="inset:0;background:rgba(7,8,12,.7)" data-k="fadeIn" data-at="L8:status-.4" data-dur=".3"></div>
+    <div class="row" style="top:470px" data-k="slam" data-at="L8:status-.2" data-dur=".5"><span class="tag" style="font-size:96px;padding:20px 50px">STATUS SYMBOL</span></div>
+    <div class="meme" style="top:700px" data-k="rise" data-at="L8:meme-.2">
+      <small>every meme, 2018</small>
+      "sorry, can't hear you, I'm wearing my AirPods"
+    </div>
+    <div class="row" style="top:1040px" data-k="slam" data-at="L8:free" data-dur=".45"><span class="stamp" style="font-size:84px;color:var(--gold);border-color:var(--gold);--r:6deg;transform:rotate(6deg)">FREE ADVERTISING</span></div>
+  </section>
+
+  <!-- ===================== 6. GROWTH ===================== -->
+  <section class="scene" data-scene="growth">
+    <div class="bgglow" style="background:radial-gradient(55% 40% at 50% 35%,rgba(124,196,255,.22),transparent 70%)"></div>
+    <div class="row kicker" style="top:230px" data-k="fadeIn" data-at="L9">2019 · level up</div>
+    <div class="abs" style="left:0;top:0;width:1080px;height:1920px" data-k="fadeOut" data-at="L10-.3" data-dur=".35">
+      <div class="row h-l" style="top:300px" data-k="rise" data-at="L9:AirPods"><span class="grad">AirPods Pro</span></div>
+      <div class="pair" style="left:330px;top:450px;transform:scale(.9)" data-k="pop" data-at="L9:Pro" data-dur=".7">
+        <div class="pod pro"><div class="head"><div class="grill"></div></div><div class="stem"></div><div class="tip"></div></div>
+        <div class="pod pro"><div class="wrap" style="position:absolute;inset:0"><div class="head"><div class="grill"></div></div><div class="stem"></div><div class="tip"></div></div></div>
+      </div>
+      <svg class="wave" viewBox="0 0 840 220" preserveAspectRatio="none" data-k="flatten" data-at="L9:cancellation-.1" data-dur=".9">
+        <path id="noisePath" fill="none" stroke="#ff8a80" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="row" style="top:1150px" data-k="pop" data-at="L9:active"><span class="anc">ACTIVE NOISE CANCELLATION</span></div>
+    </div>
+    <div class="bars" data-k="fadeIn" data-at="L10" data-dur=".3">
+      <div style="height:16%" data-k="fill" data-at="L10+.1" data-dur=".5"></div>
+      <div style="height:34%" data-k="fill" data-at="L10+.3" data-dur=".5"></div>
+      <div style="height:58%" data-k="fill" data-at="L10+.5" data-dur=".5"></div>
+      <div style="height:100%;background:linear-gradient(180deg,#fff2c4,#ffb020)" data-k="fill" data-at="L10:analysts" data-dur=".7"></div>
+    </div>
+    <div class="row" style="top:300px" data-k="slam" data-at="L10:sixty-.1" data-dur=".4"><div class="bigNum grad" id="num" style="display:inline-block">M</div></div>
+    <div class="row h-m" style="top:600px" data-k="rise" data-at="L10:pairs">pairs sold <span style="color:var(--gold)">in one year</span></div>
+    <div class="row sub" style="top:1190px;font-size:32px" data-k="fadeIn" data-at="L10:estimated">analyst estimates · illustrative growth</div>
+  </section>
+
+  <!-- ===================== 7. OUTRO ===================== -->
+  <section class="scene" data-scene="outro">
+    <div class="bgglow" style="background:radial-gradient(60% 45% at 50% 40%,rgba(124,196,255,.18),transparent 70%)"></div>
+    <div class="abs" style="left:0;top:0;width:1080px;height:1920px" data-k="fadeOut" data-at="L12-.35" data-dur=".35">
+      <div class="row kicker" style="top:250px" data-k="fadeIn" data-at="L11">So, how?</div>
+      <div class="row word3" style="top:420px" data-k="slideL" data-at="L11:timing-.2">perfect <b>timing</b></div>
+      <div class="row word3" style="top:620px" data-k="slideR" data-at="L11:effortless-.1">effortless <b>design</b></div>
+      <div class="row word3" style="top:820px" data-k="slideL" data-at="L11:look-.1">an <b>iconic</b> look</div>
+    </div>
+    <div class="endglow" data-k="fadeIn" data-at="L12" data-dur="1"></div>
+    <div class="abs" style="left:0;top:0;width:1080px;height:1920px" data-k="zoomOut" data-at="L12" data-dur="3" data-ease="cubic-bezier(.2,.8,.2,1)">
+      <div class="pair" style="left:330px;top:300px" data-k="pop" data-at="L12" data-dur=".8">
+        <div class="pod"><div class="head"><div class="grill"></div></div><div class="stem"></div><div class="tip"></div></div>
+        <div class="pod"><div class="wrap" style="position:absolute;inset:0"><div class="head"><div class="grill"></div></div><div class="stem"></div><div class="tip"></div></div></div>
+      </div>
+      <div class="row h-l" style="top:820px" data-k="slam" data-at="L12:earbuds-.25" data-dur=".45">Tiny earbuds.</div>
+      <div class="row h-xl" style="top:940px" data-k="slam" data-at="L12:Massive-.05" data-dur=".5"><span class="grad">Massive<br>impact.</span></div>
+    </div>
+    <div class="abs" style="inset:0;background:#000" data-k="fadeIn" data-at="END-.6" data-dur=".6"></div>
+  </section>
+
+  <div class="cap" id="cap"></div>
+  <div class="flash" id="flash"></div>
+  <div class="grain"></div>
+</div>
+<button class="btn" id="snd">🔇 Tap for sound</button>
+
+<script>
+(() => {
+  const TL = window.TIMELINE;
+  const DUR = TL.duration * 1000;
+  const stage = document.getElementById('stage');
+  const capture = new URLSearchParams(location.search).has('capture');
+  if (capture) document.body.classList.add('capture');
+  const fit = () => { stage.style.transform = `scale(${Math.min(innerWidth / 1080, innerHeight / 1920)})`; };
+  addEventListener('resize', fit); fit();
+
+  // ---------- resolve "L4:word+0.2" style cue specs to seconds ----------
+  const wordTime = (line, word) => {
+    const i = line.text.toLowerCase().indexOf(word.toLowerCase());
+    if (i < 0) { console.warn('cue word not found', word, line.text); return line.start; }
+    return line.start + (i / line.text.length) * (line.end - line.start);
+  };
+  const resolve = spec => {
+    const m = spec.match(/^(?:L(\d+)(?::([A-Za-z0-9']+))?(\$)?|(END))([+-][\d.]+)?$/);
+    if (!m) throw new Error('bad cue ' + spec);
+    let t;
+    if (m[4]) t = TL.duration;
+    else {
+      const line = TL.lines[+m[1]];
+      t = m[3] ? line.end : m[2] ? wordTime(line, m[2]) : line.start;
+    }
+    return t + (m[5] ? parseFloat(m[5]) : 0);
+  };
+  window.resolveCue = resolve;
+
+  // ---------- crowd + noise wave (generated once) ----------
+  const crowd = document.getElementById('crowd');
+  const skins = ['#3a3f4b', '#4a4152', '#3f4a4a', '#4b453d', '#383d50'];
+  const shirts = ['#262a33', '#2d2533', '#23302e', '#33291f', '#1f2638'];
+  const rows = [[0, 5], [1, 4], [2, 5]];
+  let pi = 0;
+  rows.forEach(([r, n]) => {
+    for (let c = 0; c < n; c++) {
+      const p = document.createElement('div');
+      p.className = 'person';
+      const w = 960 / n;
+      p.style.left = (c * w + w / 2 - 75 - 60) + 'px';
+      p.style.top = (r * 200) + 'px';
+      p.style.zIndex = r;
+      p.style.transform = `scale(${0.85 + r * 0.12})`;
+      p.style.setProperty('--skin', skins[(c + r) % 5]);
+      p.style.setProperty('--shirt', shirts[(c * 2 + r) % 5]);
+      p.innerHTML = '<div class="bd"></div><div class="hd"></div><div class="bud"></div><div class="bud r"></div>';
+      p.dataset.k = 'pop';
+      p.dataset.at = `L7:stems${pi ? '+' + (pi * 0.11).toFixed(2) : ''}`;
+      p.dataset.dur = '.4';
+      crowd.appendChild(p); pi++;
+    }
+  });
+  let d = 'M0 110';
+  for (let x = 0; x <= 840; x += 12) d += ` L${x} ${110 + Math.sin(x * 0.11) * 60 * Math.sin(x * 0.013 + 1) + Math.sin(x * 0.37) * 30}`;
+  document.getElementById('noisePath').setAttribute('d', d);
+
+  // ---------- scenes: fade in/out on the timeline ----------
+  document.querySelectorAll('.scene').forEach(sc => {
+    const s = TL.scenes.find(x => x.id === sc.dataset.scene);
+    const last = s === TL.scenes[TL.scenes.length - 1];
+    sc.style.animation = `fadeIn .3s ease ${s.start}s both` + (last ? '' : `, fadeOut .3s ease ${s.end - 0.15}s forwards`);
+  });
+  // flash on every cut
+  const fl = document.getElementById('flash');
+  fl.style.animation = TL.scenes.slice(1).map(s => `flashK .35s ease-out ${s.start}s forwards`).join(', ');
+  fl.style.opacity = 0;
+
+  // ---------- place every cue-driven animation ----------
+  document.querySelectorAll('[data-k]').forEach(el => {
+    const t = resolve(el.dataset.at);
+    const dur = el.dataset.dur || '.6';
+    const ease = el.dataset.ease || 'cubic-bezier(.2,.8,.2,1)';
+    const anim = `${el.dataset.k} ${dur}s ${ease} ${t.toFixed(3)}s both`;
+    el.style.animation = el.style.animation ? el.style.animation + ', ' + anim : anim;
+  });
+  // big number counter
+  const num = document.getElementById('num');
+  num.style.animation = `count 1.4s cubic-bezier(.2,.7,.2,1) ${resolve('L10:sixty-.1').toFixed(3)}s both`;
+  num.parentElement.style.animation = num.parentElement.style.animation;
+
+  // ---------- captions with karaoke word highlight ----------
+  const cap = document.getElementById('cap');
+  let curLine = -1;
+  const words = TL.lines.map(l => {
+    const ws = l.text.split(' ');
+    let acc = 0;
+    return ws.map(w => { const st = l.start + (acc / l.text.length) * (l.end - l.start); acc += w.length + 1; return { w, st }; });
+  });
+  // show at most ~7 words at a time, TikTok style
+  const chunks = words.map(ws => { const out = []; for (let i = 0; i < ws.length; i += 7) out.push(ws.slice(i, i + 7)); return out; });
+  const updateCaption = sec => {
+    let li = TL.lines.findIndex(l => sec >= l.start - 0.05 && sec < l.end + 0.35);
+    if (li < 0) { if (curLine !== -1) { cap.innerHTML = ''; curLine = -1; } return; }
+    const ch = chunks[li];
+    let ci = 0;
+    for (let i = 0; i < ch.length; i++) if (sec >= ch[i][0].st - 0.05) ci = i;
+    const key = li * 100 + ci;
+    if (key !== curLine) { cap.innerHTML = ch[ci].map(x => `<span>${x.w}</span>`).join(' '); curLine = key; }
+    const spans = cap.children;
+    let nowIdx = -1;
+    ch[ci].forEach((x, i) => { if (sec >= x.st) nowIdx = i; });
+    for (let i = 0; i < spans.length; i++) spans[i].className = i < nowIdx ? 'on' : i === nowIdx ? 'now' : '';
+  };
+
+  const seek = ms => {
+    document.getAnimations().forEach(a => { a.pause(); a.currentTime = ms; });
+    updateCaption(ms / 1000);
+  };
+  window.seek = seek;
+  window.AD_DURATION = DUR;
+  getComputedStyle(stage).opacity;
+  if (capture) { seek(0); return; }
+
+  let t = 0, last = null, paused = false, sound = false;
+  const audio = new Audio('mix.wav');
+  audio.preload = 'auto';
+  const btn = document.getElementById('snd');
+  const setSound = on => { sound = on; btn.textContent = on ? '🔊 Sound on' : '🔇 Tap for sound'; if (!on) audio.pause(); };
+  const syncAudio = () => {
+    if (!sound || paused) { if (!audio.paused) audio.pause(); return; }
+    if (Math.abs(audio.currentTime - t / 1000) > 0.08) audio.currentTime = t / 1000;
+    if (audio.paused) audio.play().catch(() => setSound(false));
+  };
+  const loop = now => {
+    if (last !== null && !paused) t = (t + now - last) % DUR;
+    last = now; seek(t); syncAudio();
+    requestAnimationFrame(loop);
+  };
+  requestAnimationFrame(loop);
+  addEventListener('keydown', e => {
+    if (e.code === 'Space') { paused = !paused; e.preventDefault(); }
+    if (e.key === 'm' || e.key === 'M') setSound(!sound);
+    if (e.key === 'ArrowRight') t = (t + 1000) % DUR;
+    if (e.key === 'ArrowLeft') t = (t - 1000 + DUR) % DUR;
+  });
+  const toggle = () => { if (!sound) { t = 0; setSound(true); } else setSound(false); };
+  stage.addEventListener('click', toggle);
+  btn.addEventListener('click', toggle);
+})();
+</script>
+</body>
+</html>
