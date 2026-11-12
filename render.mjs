@@ -1,8 +1,8 @@
-// Renders index.html to a TikTok-ready MP4 (1080x1920, 30fps, H.264).
+// Renders index.html + synthesized SFX to a TikTok-ready MP4 (1080x1920, 30fps, H.264 + AAC).
 // Usage: node render.mjs [out.mp4]
 import { createRequire } from 'node:module';
 const { chromium } = createRequire(import.meta.url)('playwright');
-import { spawn } from 'node:child_process';
+import { spawn, execFileSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 import path from 'node:path';
 
@@ -17,8 +17,14 @@ await page.evaluate(() => document.fonts.ready);
 const dur = await page.evaluate(() => window.AD_DURATION);
 const frames = Math.round((dur / 1000) * FPS);
 
+// 1) sound effects track
+execFileSync('python3', ['sfx.py', 'sfx.wav'], { stdio: 'inherit' });
+
+// 2) frames -> H.264, muxed with the SFX track
 const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-i', '-',
-  '-c:v', 'libx264', '-preset', 'slow', '-crf', '17', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', out],
+  '-i', 'sfx.wav', '-map', '0:v', '-map', '1:a',
+  '-c:v', 'libx264', '-preset', 'slow', '-crf', '17', '-pix_fmt', 'yuv420p',
+  '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', out],
   { stdio: ['pipe', 'inherit', 'inherit'] });
 
 for (let i = 0; i < frames; i++) {
